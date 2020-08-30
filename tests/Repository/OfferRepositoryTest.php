@@ -52,4 +52,11 @@ class OfferRepositoryTest extends KernelTestCase
         $this->assertEquals($expected->getImageUrl(), $result->getImageUrl());
         $this->assertEquals($expected->getCashBack(), $result->getCashBack());
     }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->entityManager->close();
+        $this->entityManager = null;
+    }
 }
