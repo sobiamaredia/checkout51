@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OfferController!{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="th-sm">image</th>
+            <th class="th-sm">name</th>
+            <th class="th-sm">cash back</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in listOfOffers %}
+            <tr>
+                <td><img src="{{ item.imageUrl }}" /></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.cashBack }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
