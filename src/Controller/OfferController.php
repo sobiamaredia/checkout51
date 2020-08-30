@@ -22,7 +22,7 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/offers", name="offers")
+     * @Route("/offers", name="offers", methods="GET")
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @return Response
