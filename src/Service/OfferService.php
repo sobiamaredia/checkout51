@@ -20,21 +20,13 @@ class OfferService
     }
 
     /**
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return \Doctrine\ORM\Query
      */
-    public function getAllOffers(Request $request, PaginatorInterface $paginator)
+    public function getAllOffers()
     {
         /** @var OfferRepository $offerRepository */
         $offerRepository = $this->em->getRepository('App:Offer');
         $query = $offerRepository->getAllOffersSQL();
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10
-        );
-        return $pagination;
+        return $query;
     }
-
 }

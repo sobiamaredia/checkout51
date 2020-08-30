@@ -29,7 +29,13 @@ class OfferController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
-        $pagination = $this->offerService->getAllOffers($request, $paginator);
+        $query = $this->offerService->getAllOffers();
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10
+        );
+
         return $this->render('offer/index.html.twig', ['pagination' => $pagination]);
     }
 }
