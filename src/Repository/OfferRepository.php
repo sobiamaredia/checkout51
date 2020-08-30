@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,12 @@ class OfferRepository extends ServiceEntityRepository
         parent::__construct($registry, Offer::class);
     }
 
-    // /**
-    //  * @return Offer[] Returns an array of Offer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Query
+     */
+    public function getAllOffersSQL()
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql   = "SELECT offer FROM App:Offer offer";
+        return $this->getEntityManager()->createQuery($sql);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Offer
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\OfferService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -12,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OfferController extends AbstractController
 {
-    /** @var EntityManager $em */
-    private $em;
+    /** @var OfferService $em */
+    private $offerService;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(OfferService $offerService)
     {
-        $this->em = $entityManager;
+        $this->offerService = $offerService;
     }
 
     /**
@@ -28,18 +29,7 @@ class OfferController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
-        $dql   = "SELECT offer FROM App:Offer offer";
-        $query = $this->em->createQuery($dql);
-
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10,
-            array(
-                'defaultSortFieldName' => 'offer.name',
-                'defaultSortDirection' => 'asc',
-            )
-        );
+        $pagination = $this->offerService->getAllOffers($request, $paginator);
         return $this->render('offer/index.html.twig', ['pagination' => $pagination]);
     }
 }
