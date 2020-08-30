@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
-use App\Repository\OfferRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OfferController extends AbstractController
@@ -18,16 +21,25 @@ class OfferController extends AbstractController
     }
 
     /**
-     * @Route("/offer", name="offer")
+     * @Route("/offers", name="offers")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
-    public function index()
+    public function index(Request $request, PaginatorInterface $paginator)
     {
-        /** @var OfferRepository $offers */
-        $offerRepository = $this->em->getRepository('App:Offer');
-        $offers = $offerRepository->findAll();
+        $dql   = "SELECT offer FROM App:Offer offer";
+        $query = $this->em->createQuery($dql);
 
-        return $this->render('offer/index.html.twig', [
-            'listOfOffers' => $offers
-        ]);
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10,
+            array(
+                'defaultSortFieldName' => 'offer.name',
+                'defaultSortDirection' => 'asc',
+            )
+        );
+        return $this->render('offer/index.html.twig', ['pagination' => $pagination]);
     }
 }

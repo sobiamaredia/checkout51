@@ -1,25 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello OfferController!{% endblock %}
+{% block title %}Offers!{% endblock %}
 
 {% block body %}
     <table class="table">
-        <thead>
         <tr>
-            <th class="th-sm">image</th>
-            <th class="th-sm">name</th>
-            <th class="th-sm">cash back</th>
+            <th>Id</th>
+            <th>Image</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Name', 'offer.name') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Cash Back', 'offer.cashBack') }}
+            </th>
         </tr>
-        </thead>
-        <tbody>
-        {% for item in listOfOffers %}
-            <tr>
+
+        {# table body #}
+        {% for item in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ item.id }}</td>
                 <td><img src="{{ item.imageUrl }}" /></td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.cashBack }}</td>
             </tr>
         {% endfor %}
-        </tbody>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
 {% endblock %}
