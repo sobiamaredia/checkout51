@@ -1,0 +1,48 @@
+version: '3'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-php
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: mysql://dev:welcome123@mysql:3306/checkout51?serverVersion=5.7
+    volumes:
+      - ./checkout51/:/var/www/checkout51/
+    networks:
+      - symfony
+    depends_on:
+      - mysql
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - ./checkout51/:/var/www/checkout51/
+    ports:
+      - 8004:80
+    networks:
+      - symfony
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci',
+              '--default-authentication-plugin=mysql_native_password']
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_HOST=localhost
+      - DEV_MYSQL_USER=dev
+      - DEV_MYSQL_PASSWORD=welcome123
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./dev-scripts/populate_database.sh:/docker-entrypoint-initdb.d/populate_database.sh
+      - ./dev-scripts/initial-database.sql:/dev-scripts/initial-database.sql
+    networks:
+      - symfony
+networks:
+  symfony:
