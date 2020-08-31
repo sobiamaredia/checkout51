@@ -1,0 +1,7 @@
+dace8b,172.23.0.1,GET,http://localhost:8004/,1598844312,,200
+e28b07,172.23.0.1,GET,http://localhost:8004/?direction=asc&page=1&sort=offer.name,1598844375,,200
+b4c035,172.23.0.1,GET,http://localhost:8004/?direction=desc&page=1&sort=offer.name,1598844380,,200
+6ce532,172.23.0.1,GET,http://localhost:8004/?direction=asc&page=1&sort=offer.name,1598844403,,200
+dae31e,172.23.0.1,GET,http://localhost:8004/?direction=asc&page=1&sort=offer.cashBack,1598844458,,200
+51760a,172.23.0.1,GET,http://localhost:8004/?direction=desc&page=1&sort=offer.cashBack,1598844465,,200
+0c7f6f,172.23.0.1,GET,http://localhost:8004/?direction=asc&page=1&sort=offer.cashBack,1598844471,,200
