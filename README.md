@@ -1,5 +1,8 @@
 # checkout51
 
+## Project Requirements
+1) Docker
+
 ## Project Guideline
 
 For this project we used symfony 5. 
