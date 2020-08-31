@@ -6,7 +6,7 @@ For this project we used symfony 5.
 This project include all the database migration scripts 
 which create database and tables. 
 
-For sorting and pagination I used symfony library `Knp Pager component`.
+For sorting and pagination I used [KnpLabs components](https://github.com/KnpLabs/knp-components) library
 
 
 ### Clone directory
